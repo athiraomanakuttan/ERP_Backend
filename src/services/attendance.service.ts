@@ -3,6 +3,7 @@ import { employeeRepository } from '../repositories/EmployeeRepository';
 import { taskService } from './task.service';
 import { AppError } from '../utils/AppError';
 import { getEmployeeVisibilityScope } from '../utils/employeeAccess';
+import { AttendanceSession } from '../models/Attendance.model';
 
 function dateInTimeZone(date: Date, timeZone: string): string {
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -104,7 +105,6 @@ export class AttendanceService {
   }
 
   async correct(sessionId: string, correction: { checkInTime?: Date; checkOutTime?: Date; correctionReason: string }, actor: AttendanceActor) {
-    const { AttendanceSession } = await import('../models/Attendance.model');
     const session = await AttendanceSession.findById(sessionId);
     if (!session) throw AppError.notFound('Attendance record not found');
     await this.assertEmployeeInAttendanceScope(actor, session.employee.toString());

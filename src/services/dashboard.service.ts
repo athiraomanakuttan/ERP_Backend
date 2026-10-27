@@ -3,6 +3,7 @@ import { Project } from '../models/Project.model';
 import { LeaveRequest } from '../models/Leave.model';
 import { AttendanceSession } from '../models/Attendance.model';
 import { holidayRepository } from '../repositories/HolidayRepository';
+import { Task } from '../models/Task.model';
 
 function todayStr(): string {
   return new Date().toISOString().slice(0, 10);
@@ -70,7 +71,10 @@ export class DashboardService {
     const [todaysAttendance, myPendingLeaves, myTasks] = await Promise.all([
       AttendanceSession.find({ employee: employeeId, workDate: today }),
       LeaveRequest.countDocuments({ employee: employeeId, status: 'pending', isDeleted: { $ne: true } }),
-      (await import('../models/Task.model')).Task.countDocuments({ assignees: employeeId, isDeleted: { $ne: true } }),
+      Task.countDocuments({
+  assignees: employeeId,
+  isDeleted: { $ne: true }
+})  
     ]);
     return {
       todaysAttendance,
