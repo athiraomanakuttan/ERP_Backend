@@ -1,0 +1,20 @@
+import { Router } from 'express';
+import * as controller from '../controllers/invoice.controller';
+import { authenticate } from '../middlewares/authenticate';
+import { requireAdmin } from '../middlewares/requirePermission';
+import { validate } from '../middlewares/validate';
+import { invoiceCreateSchema, invoiceUpdateSchema, invoiceIdParamSchema, invoiceListQuerySchema } from '../validators/invoice.validators';
+
+const router = Router();
+router.use(authenticate, requireAdmin);
+router.get('/next-number', controller.nextNumber);
+router.get('/', validate({ query: invoiceListQuerySchema }), controller.list);
+router.post('/', validate({ body: invoiceCreateSchema }), controller.create);
+router.get('/:id/pdf', validate({ params: invoiceIdParamSchema }), controller.downloadPdf);
+router.get('/:id/docx', validate({ params: invoiceIdParamSchema }), controller.downloadDocx);
+router.get('/:id', validate({ params: invoiceIdParamSchema }), controller.getById);
+router.put('/:id', validate({ params: invoiceIdParamSchema, body: invoiceUpdateSchema }), controller.update);
+router.patch('/:id/issue', validate({ params: invoiceIdParamSchema }), controller.issue);
+router.patch('/:id/cancel', validate({ params: invoiceIdParamSchema }), controller.cancel);
+router.delete('/:id', validate({ params: invoiceIdParamSchema }), controller.remove);
+export default router;

@@ -1,0 +1,48 @@
+import { Router } from 'express';
+import authRoutes from './auth.routes';
+import employeeRoutes from './employee.routes';
+import roleRoutes from './role.routes';
+import permissionRoutes from './permission.routes';
+import branchRoutes from './branch.routes';
+import clientCompanyRoutes from './clientCompany.routes';
+import projectRoutes from './project.routes';
+import taskRoutes from './task.routes';
+import attendanceRoutes from './attendance.routes';
+import leaveRoutes from './leave.routes';
+import holidayRoutes from './holiday.routes';
+import announcementRoutes from './announcement.routes';
+import notificationRoutes from './notification.routes';
+import dashboardRoutes from './dashboard.routes';
+import workSummaryRoutes from './workSummary.routes';
+import reportRoutes from './report.routes';
+import settingsRoutes from './settings.routes';
+import workTimeRoutes from './workTime.routes';
+import customerRoutes from './customer.routes';
+import invoiceRoutes from './invoice.routes';
+import paymentRoutes from './payment.routes';
+
+const router = Router();
+
+router.use('/auth', authRoutes);
+router.use('/employees', employeeRoutes);
+router.use('/roles', roleRoutes);
+router.use('/permissions', permissionRoutes);
+router.use('/branches', branchRoutes);
+router.use('/client-companies', clientCompanyRoutes);
+router.use('/projects', projectRoutes);
+router.use('/tasks', taskRoutes);
+router.use('/attendance', attendanceRoutes);
+router.use('/leaves', leaveRoutes);
+router.use('/holidays', holidayRoutes);
+router.use('/announcements', announcementRoutes);
+router.use('/notifications', notificationRoutes);
+router.use('/dashboard', dashboardRoutes);
+router.use('/work-summary', workSummaryRoutes);
+router.use('/reports', reportRoutes);
+router.use('/settings', settingsRoutes);
+router.use('/work-time', workTimeRoutes);
+router.use('/customers', customerRoutes);
+router.use('/invoices', invoiceRoutes);
+router.use('/payments', paymentRoutes);
+
+export default router;
