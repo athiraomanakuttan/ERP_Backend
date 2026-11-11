@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import * as controller from '../controllers/serviceCategory.controller';
+import { authenticate } from '../middlewares/authenticate';
+import { requireAdmin } from '../middlewares/requirePermission';
+import { validate } from '../middlewares/validate';
+import { categoryBodySchema, categoryIdParamSchema } from '../validators/serviceCategory.validators';
+const router = Router();
+router.use(authenticate, requireAdmin);
+router.get('/', controller.list);
+router.post('/', validate({ body: categoryBodySchema }), controller.create);
+router.put('/:id', validate({ params: categoryIdParamSchema, body: categoryBodySchema }), controller.update);
+router.delete('/:id', validate({ params: categoryIdParamSchema }), controller.remove);
+export default router;

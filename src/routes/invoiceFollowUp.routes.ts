@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import * as controller from '../controllers/invoiceFollowUp.controller';
+import { authenticate } from '../middlewares/authenticate';
+import { requireAdmin } from '../middlewares/requirePermission';
+import { validate } from '../middlewares/validate';
+import { invoiceFollowUpBodySchema, invoiceFollowUpIdParamSchema, invoiceFollowUpInvoiceParamSchema } from '../validators/invoiceFollowUp.validators';
+const router = Router();
+router.use(authenticate, requireAdmin);
+router.get('/invoice/:invoiceId', validate({ params: invoiceFollowUpInvoiceParamSchema }), controller.list);
+router.post('/invoice/:invoiceId', validate({ params: invoiceFollowUpInvoiceParamSchema, body: invoiceFollowUpBodySchema }), controller.create);
+router.delete('/:id', validate({ params: invoiceFollowUpIdParamSchema }), controller.remove);
+export default router;
